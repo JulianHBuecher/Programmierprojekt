@@ -1,0 +1,61 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+    title.value: 'ID',
+    typeName: 'Connection',
+    typeNamePlural: 'Connections'
+}
+annotate view ZC_FAPP_CONNECTIONTP with
+{
+  /* Abschnitt */
+  @UI.facet: [{
+    label: 'ID',
+    position: 10
+  }, {
+    type: #IDENTIFICATION_REFERENCE,
+    label: 'Connection Data',
+    position: 20
+  }]
+  ID;
+  @UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  CarrierID;
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  CountryFrom;
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  CityFrom;
+  @UI.lineItem: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  AirportFrom;
+  @UI.lineItem: [{ position: 50 }]
+  @UI.identification: [{ position: 50 }]
+  CountryTo;
+  @UI.lineItem: [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  CityTo;
+  @UI.lineItem: [{ position: 70 }]
+  @UI.identification: [{ position: 70 }]
+  AirportTo;
+//  @UI.lineItem: [{ position: 80 }]
+//  @UI.identification: [{ position: 80 }]
+//  FlightTime;
+  @UI.lineItem: [{ position: 90 }]
+  @UI.identification: [{ position: 90 }]
+  DepatureTime;
+  @UI.lineItem: [{ position: 100 }]
+  @UI.identification: [{ position: 100 }]
+  ArrivalTime;
+  @UI.lineItem: [{ position: 110 }]
+  @UI.identification: [{ position: 110 }]
+  Distance;
+  @UI.lineItem: [{ position: 120 }]
+  @UI.identification: [{ position: 120 }]
+  DistanceUnit;
+  @UI.lineItem: [{ position: 130 }]
+  @UI.identification: [{ position: 130 }]
+  FlightType;
+  @UI.lineItem: [{ position: 140 }]
+  @UI.identification: [{ position: 140 }]
+  Period;
+}

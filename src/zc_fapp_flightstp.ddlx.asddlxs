@@ -1,0 +1,62 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+    title.value: 'CarrierID',
+    typeName: 'Flight',
+    typeNamePlural: 'Flights'
+}
+annotate view ZC_FAPP_FLIGHTSTP with
+{
+  /* Abschnitt */
+  @UI.facet: [{
+    type: #IDENTIFICATION_REFERENCE,
+    label: 'Flight Data',
+    position: 10
+  },
+  {
+    type: #IDENTIFICATION_REFERENCE,
+    label: 'Connection Data',
+    targetElement: '_Connection',
+    position: 20
+  },
+  {
+    type: #LINEITEM_REFERENCE,
+    label: 'Bookings',
+    targetElement: '_Bookings',
+    position: 30
+  }]
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  @UI.selectionField: [{ position: 10 }]
+  CarrierID;
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  @UI.selectionField: [{ position: 20 }]
+  ConnectionID;
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  AirportFrom;
+  @UI.lineItem: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  @UI.selectionField: [{ position: 40 }]
+  AirportTo;
+  @UI.lineItem: [{ position: 50 }]
+  @UI.identification: [{ position: 50 }]
+  CityFrom;
+  @UI.lineItem: [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  @UI.selectionField: [{ position: 60 }]
+  CityTo;
+  @UI.lineItem: [{ position: 70 }]
+  @UI.identification: [{ position: 70 }]
+  @UI.selectionField: [{ position: 70 }]
+  FlightDate;
+  @UI.lineItem: [{ position: 80 }]
+  @UI.identification: [{ position: 80 }]
+  PlaneType;
+  @UI.lineItem: [{ position: 90 }]
+  @UI.identification: [{ position: 90 }]
+  LoadFactor;
+  @UI.hidden: false
+  Percentage;
+}
