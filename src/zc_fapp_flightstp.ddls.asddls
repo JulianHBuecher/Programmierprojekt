@@ -7,6 +7,13 @@
 @OData.publish: true
 @Metadata.allowExtensions: true
 @Search.searchable: true
+@ObjectModel: {
+    transactionalProcessingDelegated: true,
+
+    createEnabled: false,
+    updateEnabled: false,
+    deleteEnabled: false
+}
 define view ZC_FAPP_FLIGHTSTP
   as select from ZI_FAPP_FLIGHTSTP as Flights
   association [1..1] to ZC_FAPP_CONNECTIONTP as _Connection on  _Connection.CarrierID = Flights.CarrierID
@@ -29,8 +36,14 @@ define view ZC_FAPP_FLIGHTSTP
       PlaneType,
       SeatsMax,
       SeatsOccupied,
-      LoadFactor,
-      Percentage,
+      @EndUserText.label: 'Load Factor'
+      @EndUserText.quickInfo: 'Percentage of all occupied seats'
+      @Semantics.quantity.unitOfMeasure: 'Percentage'
+//      @ObjectModel.virtualElement: true
+      division(SeatsOccupied,SeatsMax,2) * 100 as LoadFactor,
+      @Semantics.unitOfMeasure: true
+//      @ObjectModel.virtualElement: true
+      cast(' % ' as abap.unit(3))           as Percentage,
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 0.7
       _Connection.AirportFrom,
@@ -45,6 +58,7 @@ define view ZC_FAPP_FLIGHTSTP
       _Connection.CityTo,
       /* Associations */
       _Connection,
+      @ObjectModel.association.type: [#TO_COMPOSITION_CHILD]
       _Bookings
 }
 where FlightDate > $session.system_date

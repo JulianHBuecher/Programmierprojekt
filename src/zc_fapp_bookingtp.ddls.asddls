@@ -6,10 +6,15 @@
 @VDM.viewType: #CONSUMPTION
 @Search.searchable: true
 @Metadata.allowExtensions: true
+@ObjectModel: {
+    createEnabled: false,
+    updateEnabled: false,
+    deleteEnabled: false
+}
 define view ZC_FAPP_BookingTP
   as select from ZI_FAPP_BookingTP
   association [1..1] to ZC_FAPP_CustomerTP as _Customer on  _Customer.ID = ZI_FAPP_BookingTP.CustomerID
-  association [1..1] to ZI_FAPP_FLIGHTSTP  as _Flight   on  $projection.CarrierID    = _Flight.CarrierID
+  association [1..1] to ZC_FAPP_FLIGHTSTP  as _Flight   on  $projection.CarrierID    = _Flight.CarrierID
                                                         and $projection.ConnectionID = _Flight.ConnectionID
                                                         and $projection.FlightDate   = _Flight.FlightDate
 {
@@ -41,5 +46,7 @@ define view ZC_FAPP_BookingTP
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 0.7
       _Customer.Name,
+      @ObjectModel.association.type: [#TO_COMPOSITION_PARENT, #TO_COMPOSITION_ROOT]
       _Flight
 }
+where Cancelled <> 'X'
