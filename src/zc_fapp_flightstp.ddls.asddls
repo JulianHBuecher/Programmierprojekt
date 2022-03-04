@@ -16,14 +16,18 @@
 }
 define view ZC_FAPP_FLIGHTSTP
   as select from ZI_FAPP_FLIGHTSTP as Flights
-  association [1..1] to ZC_FAPP_CONNECTIONTP as _Connection on  _Connection.CarrierID = Flights.CarrierID
-                                                            and _Connection.ID        = Flights.ConnectionID
-  association [1..*] to ZC_FAPP_BookingTP    as _Bookings   on  _Bookings.CarrierID    = Flights.CarrierID
-                                                            and _Bookings.ConnectionID = Flights.ConnectionID
-                                                            and _Bookings.FlightDate   = Flights.FlightDate
+  association [1..1] to ZC_FAPP_CONNECTIONTP as _Connection      on  _Connection.CarrierID = Flights.CarrierID
+                                                                 and _Connection.ID        = Flights.ConnectionID
+  association [1..*] to ZC_FAPP_BookingTP    as _Bookings        on  _Bookings.CarrierID    = Flights.CarrierID
+                                                                 and _Bookings.ConnectionID = Flights.ConnectionID
+                                                                 and _Bookings.FlightDate   = Flights.FlightDate
+  association [0..*] to ZC_FAPP_CarrierText  as _CarrierText     on  $projection.CarrierID = _CarrierText.Carrier
+  association [0..*] to ZC_FAPP_AIRPORTTEXT  as _AirportTextTo   on  $projection.airportto = _AirportTextTo.ID
+  association [0..*] to ZC_FAPP_AIRPORTTEXT  as _AirportTextFrom on  $projection.airportfrom = _AirportTextFrom.ID
 {
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 1
+      @ObjectModel.text.association: '_CarrierText'
   key CarrierID,
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 1
@@ -36,19 +40,20 @@ define view ZC_FAPP_FLIGHTSTP
       PlaneType,
       SeatsMax,
       SeatsOccupied,
-      @EndUserText.label: 'Load Factor'
-      @EndUserText.quickInfo: 'Percentage of all occupied seats'
-      @Semantics.quantity.unitOfMeasure: 'Percentage'
-//      @ObjectModel.virtualElement: true
-      division(SeatsOccupied,SeatsMax,2) * 100 as LoadFactor,
-      @Semantics.unitOfMeasure: true
-//      @ObjectModel.virtualElement: true
-      cast(' % ' as abap.unit(3))           as Percentage,
+      LoadFactor,
+      Percentage,
+      case
+        when LoadFactor < 80 then 3
+        when (LoadFactor > 80 and LoadFactor < 95) then 2
+        else 1
+      end as Criticality,
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 0.7
+      @ObjectModel.text.association: '_AirportTextFrom'
       _Connection.AirportFrom,
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 0.7
+      @ObjectModel.text.association: '_AirportTextTo'
       _Connection.AirportTo,
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 0.7
@@ -59,6 +64,10 @@ define view ZC_FAPP_FLIGHTSTP
       /* Associations */
       _Connection,
       @ObjectModel.association.type: [#TO_COMPOSITION_CHILD]
-      _Bookings
+      _Bookings,
+      _CarrierText,
+      _AirportTextTo,
+      _AirportTextFrom
 }
-where FlightDate > $session.system_date
+where
+  FlightDate > $session.system_date

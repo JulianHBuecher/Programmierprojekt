@@ -19,7 +19,7 @@ define view ZI_FAPP_Booking
       invoice    as Invoice,
       class      as Class,
       forcuram   as Amount,
-      forcurkey  as AmmountCurrency,
+      forcurkey  as AmountCurrency,
       loccuram   as LocalAmount,
       loccurkey  as LocalAmountCurrency,
       order_date as OrderDate,

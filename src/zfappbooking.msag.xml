@@ -20,6 +20,30 @@
      <MSGNR>001</MSGNR>
      <TEXT>Booking is already cancelled.</TEXT>
     </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFAPPBOOKING</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Currency of booking successfully changed to &amp;1.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFAPPBOOKING</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Changing of currency is not possible.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFAPPBOOKING</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Only non negative values are allowed.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZFAPPBOOKING</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Currency &amp;1 does not exist.</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

@@ -20,10 +20,10 @@
 define view ZI_FAPP_FLIGHTSTP
   as select from ZI_FAPP_FLIGHTS as Flights
   association [1..1] to ZI_FAPP_CONNECTIONTP as _Connection on  _Connection.ID        = Flights.ConnectionID
-                                                          and _Connection.CarrierID = Flights.CarrierID
+                                                            and _Connection.CarrierID = Flights.CarrierID
   association [1..*] to ZI_FAPP_BookingTP    as _Bookings   on  _Bookings.CarrierID    = Flights.CarrierID
-                                                          and _Bookings.ConnectionID = Flights.ConnectionID
-                                                          and _Bookings.FlightDate   = Flights.FlightDate
+                                                            and _Bookings.ConnectionID = Flights.ConnectionID
+                                                            and _Bookings.FlightDate   = Flights.FlightDate
 {
   key CarrierID,
   key ConnectionID,
@@ -33,6 +33,12 @@ define view ZI_FAPP_FLIGHTSTP
       PlaneType,
       SeatsMax,
       SeatsOccupied,
+      @EndUserText.label: 'Load Factor'
+      @EndUserText.quickInfo: 'Percentage of all occupied seats'
+      @Semantics.quantity.unitOfMeasure: 'Percentage'
+      cast(division(SeatsOccupied,SeatsMax,2) * 100 as abap.int4) as LoadFactor,
+      @Semantics.unitOfMeasure: true
+      cast(' % ' as abap.unit(3))                                 as Percentage,
       _Connection,
       @ObjectModel.association.type: [#TO_COMPOSITION_CHILD]
       _Bookings

@@ -6,7 +6,7 @@
 }
 annotate view ZC_FAPP_CONNECTIONTP with
 {
-  /* Abschnitt */
+  /* Facets */
   @UI.facet: [{
     label: 'ID',
     position: 10

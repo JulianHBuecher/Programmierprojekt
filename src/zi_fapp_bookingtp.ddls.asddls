@@ -9,16 +9,16 @@
     semanticKey: ['ID', 'CarrierID', 'ConnectionID', 'FlightDate'],
     representativeKey: ['ID'],
 
-    createEnabled: false,
+    createEnabled: true,
     updateEnabled: true,
     deleteEnabled: false
 }
 define view ZI_FAPP_BookingTP
   as select from ZI_FAPP_Booking
-  association [1..1] to ZI_FAPP_CustomerTP as _Customer on $projection.CustomerID = _Customer.ID
-  association [1..1] to ZI_FAPP_FLIGHTSTP as _Flight on $projection.CarrierID = _Flight.CarrierID and
-                                                        $projection.ConnectionID = _Flight.ConnectionID and
-                                                        $projection.FlightDate = _Flight.FlightDate
+  association [1..1] to ZI_FAPP_CustomerTP as _Customer on  $projection.CustomerID = _Customer.ID
+  association [1..1] to ZI_FAPP_FLIGHTSTP  as _Flight   on  $projection.CarrierID    = _Flight.CarrierID
+                                                        and $projection.ConnectionID = _Flight.ConnectionID
+                                                        and $projection.FlightDate   = _Flight.FlightDate
 {
   key ID,
   key CarrierID,
@@ -26,12 +26,16 @@ define view ZI_FAPP_BookingTP
   key FlightDate,
       CustomerID,
       CustomerType,
+      @Semantics.quantity.unitOfMeasure: 'WeightUnit'
       LuggageWeight,
+      @Semantics.unitOfMeasure: true
       WeightUnit,
       Invoice,
       Class,
+      @Semantics.amount.currencyCode: 'AmountCurrency'
       Amount,
-      AmmountCurrency,
+      @Semantics.currencyCode: true
+      AmountCurrency,
       LocalAmount,
       LocalAmountCurrency,
       OrderDate,

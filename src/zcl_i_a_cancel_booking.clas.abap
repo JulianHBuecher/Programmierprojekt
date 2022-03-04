@@ -18,10 +18,10 @@ CLASS ZCL_I_A_CANCEL_BOOKING IMPLEMENTATION.
 
 
 METHOD /bobf/if_frw_action~execute.
-    DATA bookings TYPE ztifapp_bookingtp.
+    DATA bookings TYPE ztifapp_bookingtp3.
     DATA message TYPE REF TO zcm_fapp_booking.
 
-    " Daten lesen
+    " Read data
     io_read->retrieve(
       EXPORTING
         iv_node       = is_ctx-node_key
@@ -31,16 +31,16 @@ METHOD /bobf/if_frw_action~execute.
         et_data       = bookings
         et_failed_key = et_failed_key ).
 
-    " Nachrichten-Container erstellen
+    " Create message container
     IF eo_message IS NOT BOUND.
       eo_message = /bobf/cl_frw_factory=>get_message( ).
     ENDIF.
 
-    " Daten sequentiell durchlaufen
+    " Loop over data
     LOOP AT bookings REFERENCE INTO DATA(booking).
       IF booking->cancelled = 'X'.
       " Already cancelled
-      " Error Nachricht erzeugen
+      " Create error message
         message = NEW zcm_fapp_booking(
           textid   = zcm_fapp_booking=>co_cancel_failed_booking
           severity = zcm_fapp_booking=>co_severity_error
@@ -53,7 +53,7 @@ METHOD /bobf/if_frw_action~execute.
         booking->cancelled = 'X'.
       ENDIF.
 
-        " Success Nachricht erzeugen
+        " Create success message
         message = NEW zcm_fapp_booking(
           textid   = zcm_fapp_booking=>co_cancel_booking
           severity = zcm_fapp_booking=>co_severity_success
@@ -61,7 +61,7 @@ METHOD /bobf/if_frw_action~execute.
 
         eo_message->add_cm( message ).
 
-      " Daten zurückschreiben
+      " Write data back
       io_modify->update(
         EXPORTING
           iv_node = is_ctx-node_key

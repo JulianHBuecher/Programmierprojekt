@@ -1,4 +1,4 @@
-@Metadata.layer: #CORE
+@Metadata.layer: #CUSTOMER
 @UI.headerInfo: {
     typeNamePlural: 'Customers',
     typeName: 'Customer',

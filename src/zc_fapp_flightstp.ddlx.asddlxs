@@ -6,7 +6,7 @@
 }
 annotate view ZC_FAPP_FLIGHTSTP with
 {
-  /* Abschnitt */
+  /* Facet */
   @UI.facet: [{
     type: #IDENTIFICATION_REFERENCE,
     label: 'Flight Data',
@@ -54,7 +54,14 @@ annotate view ZC_FAPP_FLIGHTSTP with
   @UI.lineItem: [{ position: 80 }]
   @UI.identification: [{ position: 80 }]
   PlaneType;
-  @UI.lineItem: [{ position: 90 }]
+  @UI: { lineItem: [{ type: #AS_DATAPOINT, position: 90 }]}
+   @UI.dataPoint: {
+              visualization: #PROGRESS,
+              minimumValue: 0,
+              maximumValue: 100,
+              targetValue: 100,
+              criticality: 'Criticality'
+          }
   @UI.identification: [{ position: 90 }]
   LoadFactor;
   @UI.hidden: false

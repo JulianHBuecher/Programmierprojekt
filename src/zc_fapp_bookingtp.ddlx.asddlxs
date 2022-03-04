@@ -1,4 +1,4 @@
-@Metadata.layer: #CORE
+@Metadata.layer: #CUSTOMER
 @UI.headerInfo: {
     typeNamePlural: 'Bookings',
     typeName: 'Booking',
@@ -15,12 +15,13 @@ annotate view ZC_FAPP_BookingTP with
               label: 'Customer',
               targetElement: '_Customer' }]
 
-    /* Felder */
+    /* Fields */
   @UI.lineItem: [
   { position: 10 },
-  { position: 20, type: #FOR_ACTION, dataAction: 'BOPF:CANCEL_BOOKING', label: 'Cancel' }
+  { position: 20, type: #FOR_ACTION, dataAction: 'BOPF:CANCEL_BOOKING', label: 'Cancel Booking' },
+  { position: 30, type: #FOR_ACTION, dataAction: 'BOPF:CHANGE_CURRENCY', label: 'USD <-> EUR' }
   ]
-  @UI.selectionField: [{ position: 30 }]
+  @UI.selectionField: [{ position: 10 }]
   @UI.identification: [{ position: 10 }]
   ID;
   @UI.identification: [{ position: 20 }]
@@ -29,11 +30,11 @@ annotate view ZC_FAPP_BookingTP with
   ConnectionID;
   @UI.identification: [{ position: 40 }]
   FlightDate;
-  @UI.selectionField: [{ position: 40 }]
+  @UI.selectionField: [{ position: 20 }]
   @UI.lineItem: [{ position: 50 }]
   @UI.identification: [{ position: 50 }]
   CustomerID;
-  @UI.selectionField: [{ position: 50 }]
+  @UI.selectionField: [{ position: 30 }]
   @UI.lineItem: [{ position: 51 }]
   @UI.identification: [{ position: 51 }]
   Name;
@@ -43,12 +44,9 @@ annotate view ZC_FAPP_BookingTP with
   @UI.lineItem: [{ position: 80 }]
   @UI.identification: [{ position: 80 }]
   Amount;
-  @UI.lineItem: [{ position: 100 }]
-  @UI.identification: [{ position: 100 }]
-  LocalAmount;
   @UI.lineItem: [{ position: 120 }]
   @UI.identification: [{ position: 120 }]
-  @UI.selectionField: [{ position: 60 }]
+  @UI.selectionField: [{ position: 40 }]
   OrderDate;
   @UI.lineItem: [{ position: 130 }]
   @UI.identification: [{ position: 130 }]
